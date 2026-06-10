@@ -1,73 +1,59 @@
-# React + TypeScript + Vite
+# Seomaniak Dashboard
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Tableau de bord de gestion d'utilisateurs — interface sombre au style brutalist/éditorial.
 
-Currently, two official plugins are available:
+![Dashboard](images/dashboard.png)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Stack
 
-## React Compiler
+- **Vite** — build tool
+- **React 19** — UI
+- **JavaScript** (JSX)
+- **CSS natif** — variables, animations, responsive
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+Pas de librairie UI externe. Tout le style est fait main.
 
-## Expanding the ESLint configuration
+## Fonctionnalités
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+- **Statistiques** — cartes avec total utilisateurs, actifs, inactifs
+- **Liste utilisateurs** — tableau avec recherche par nom/email/société et filtre par statut
+- **Inspecter** — affiche les détails d'un utilisateur
+- **Ajouter / Modifier** — formulaire avec validation
+- **Supprimer** — dialogue de confirmation custom
+- **Feed activité** — historique des actions
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+## Structure
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```
+src/
+├── App.jsx              # Layout principal + state management
+├── App.css              # Styles globaux des composants
+├── index.css            # Design system (variables, reset, fonts)
+├── main.jsx             # Point d'entrée
+├── components/
+│   ├── DashboardHeader  # En-tête avec salutation horaire
+│   ├── StatsCards       # Cartes statistiques
+│   ├── UserList         # Tableau + barre de recherche/filtre
+│   ├── UserModal        # Modal inspect / ajout / modification
+│   ├── ConfirmDialog    # Confirmation de suppression
+│   └── ActivityFeed     # Fil d'activité récente
+└── data/
+    └── users.js         # Données mock + types implicites
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## Captures d'écran
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+| Recherche & Filtre | Ajout utilisateur |
+|---|---|
+| ![Search](images/search.png) | ![Form](images/form.png) |
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+| Inspection | Suppression |
+|---|---|
+| ![Inspect](images/inspect.png) | ![Delete](images/delete.png) |
+
+## Lancer le projet
+
+```bash
+npm install
+npm run dev
 ```
